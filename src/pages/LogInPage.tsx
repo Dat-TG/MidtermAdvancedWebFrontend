@@ -1,7 +1,5 @@
 function LogInPage() {
-    return <>
-    Login Page
-    </>
+  return <>Login Page</>;
 }
 
 export default LogInPage;
