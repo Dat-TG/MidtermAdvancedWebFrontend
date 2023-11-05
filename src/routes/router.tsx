@@ -3,6 +3,7 @@ import HomePage from "../pages/HomePage";
 import LogInPage from "../pages/LogInPage";
 import RegisterPage from "../pages/RegisterPage";
 import LandingPage from "../pages/LandingPage";
+import UserProfilePage from "../pages/UserProfilePage";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
   {
     path: "/landing",
     element: <LandingPage />,
+  },
+  {
+    path: "/profile",
+    element: <UserProfilePage />,
   },
 ]);
 
