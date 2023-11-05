@@ -11,14 +11,17 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
 type Inputs = {
   email: string;
+  name: string;
   password: string;
+  confirmPassword: string;
 };
 
-function LogInForm() {
+function RegisterForm() {
   const {
     control,
     handleSubmit,
     formState: { errors },
+    getValues,
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
@@ -27,11 +30,13 @@ function LogInForm() {
   };
 
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassord] = useState(false);
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Typography variant="h5" align="center" fontWeight={"bold"}>
-        LOG IN
+        REGISTER
       </Typography>
+      {/* Email input */}
       <Controller
         name="email"
         control={control}
@@ -46,7 +51,6 @@ function LogInForm() {
             {...field}
             label="Email"
             fullWidth
-            type="email"
             variant="outlined"
             error={!!errors.email}
             placeholder="email@example.com"
@@ -56,6 +60,28 @@ function LogInForm() {
           />
         )}
       />
+      {/* Name input */}
+      <Controller
+        name="name"
+        control={control}
+        rules={{
+          required: true,
+        }}
+        defaultValue=""
+        render={({ field }) => (
+          <TextField
+            style={{ marginTop: "32px" }}
+            {...field}
+            label="Name"
+            fullWidth
+            variant="outlined"
+            error={!!errors.name}
+            placeholder=""
+            helperText={errors.name ? "Please enter your name." : ""}
+          />
+        )}
+      />
+      {/* Password input */}
       <Controller
         name="password"
         control={control}
@@ -92,6 +118,42 @@ function LogInForm() {
           />
         )}
       />
+      {/* Confirm password input */}
+      <Controller
+        name="confirmPassword"
+        control={control}
+        rules={{
+          required: true,
+          validate: (value) => value === getValues("password"),
+        }}
+        defaultValue=""
+        render={({ field }) => (
+          <TextField
+            style={{ marginTop: "32px" }}
+            {...field}
+            label="Confirm Password"
+            fullWidth
+            variant="outlined"
+            error={!!errors.confirmPassword}
+            helperText={errors.confirmPassword ? "Passwords do not match." : ""}
+            type={showConfirmPassword ? "text" : "password"}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    size="small"
+                    onClick={() => setShowConfirmPassord(!showConfirmPassword)}
+                    style={{ display: field.value ? "flex" : "none" }}
+                    edge="end"
+                  >
+                    {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+        )}
+      />
       <Button
         type="submit"
         variant="contained"
@@ -100,10 +162,10 @@ function LogInForm() {
         style={{ marginTop: "32px" }}
         size="large"
       >
-        <Typography fontSize={"16px"}>Login</Typography>
+        <Typography fontSize={"16px"}>Register</Typography>
       </Button>
     </form>
   );
 }
 
-export default LogInForm;
+export default RegisterForm;
