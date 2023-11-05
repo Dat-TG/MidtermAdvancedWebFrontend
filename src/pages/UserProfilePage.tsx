@@ -11,6 +11,7 @@ import {
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import EditUserDialog from "../components/EditUserDialog";
 import { toast } from "react-toastify";
+import ChangePasswordDialog from "../components/ChangePasswordDialog";
 
 function UserProfile() {
   useEffect(() => {
@@ -24,7 +25,9 @@ function UserProfile() {
 
   const [newAvatar, setNewAvatar] = useState("");
 
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isEditUserDialogOpen, setIsEditUserDialogOpen] = useState(false);
+  const [isChangePasswordDialogOpen, setIsChangePasswordDialogOpen] =
+    useState(false);
 
   const buttonStyle = {
     marginTop: "8px",
@@ -117,26 +120,57 @@ function UserProfile() {
             variant="outlined"
             fullWidth
             onClick={() => {
-              setIsDialogOpen(true);
+              setIsEditUserDialogOpen(true);
             }}
           >
             Edit information
           </Button>
 
-          <Button style={buttonStyle} variant="outlined" fullWidth>
+          <Button
+            style={buttonStyle}
+            variant="outlined"
+            fullWidth
+            onClick={() => {
+              setIsChangePasswordDialogOpen(true);
+            }}
+          >
             Change Password
           </Button>
 
           <EditUserDialog
-            open={isDialogOpen}
+            open={isEditUserDialogOpen}
             onClose={() => {
-              setIsDialogOpen(false);
+              setIsEditUserDialogOpen(false);
             }}
             user={user}
             onSave={(user: { email: string; name: string }) => {
               console.log(user);
               setUser(user);
               toast("Update information successful!", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                type: "success",
+              });
+            }}
+          />
+
+          <ChangePasswordDialog
+            open={isChangePasswordDialogOpen}
+            onClose={() => {
+              setIsChangePasswordDialogOpen(false);
+            }}
+            onChangePassword={(data: {
+              oldPassword: string;
+              newPassword: string;
+            }) => {
+              console.log(data);
+              toast("Change password successful!", {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,
