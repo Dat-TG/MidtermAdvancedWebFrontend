@@ -2,7 +2,7 @@ import { Grid, Typography, Paper, Stack } from "@mui/material";
 import { Link } from "react-router-dom";
 import LogInForm from "../components/LogInForm";
 
-function LoginPage() {
+function LogInPage() {
   return (
     <Grid
       container
@@ -35,4 +35,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+export default LogInPage;
