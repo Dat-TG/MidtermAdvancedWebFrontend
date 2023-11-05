@@ -9,6 +9,7 @@ import {
 import { useEffect, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { emailPattern } from "../utils/helpers";
 
 type Inputs = {
   email: string;
@@ -53,7 +54,7 @@ function LogInForm() {
         control={control}
         rules={{
           required: true,
-          pattern: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+          pattern: emailPattern,
         }}
         defaultValue=""
         render={({ field }) => (

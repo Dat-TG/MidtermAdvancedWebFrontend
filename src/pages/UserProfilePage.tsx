@@ -9,18 +9,22 @@ import {
   Box,
 } from "@mui/material";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
+import EditUserDialog from "../components/EditUserDialog";
+import { toast } from "react-toastify";
 
 function UserProfile() {
   useEffect(() => {
     document.title = "My profile";
   }, []);
 
-  const [user] = useState({
+  const [user, setUser] = useState({
     name: "John Doe",
     email: "john.doe@example.com",
   });
 
   const [newAvatar, setNewAvatar] = useState("");
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const buttonStyle = {
     marginTop: "8px",
@@ -108,13 +112,43 @@ function UserProfile() {
             </Typography>
           </div>
 
-          <Button style={buttonStyle} variant="outlined" fullWidth>
+          <Button
+            style={buttonStyle}
+            variant="outlined"
+            fullWidth
+            onClick={() => {
+              setIsDialogOpen(true);
+            }}
+          >
             Edit information
           </Button>
 
           <Button style={buttonStyle} variant="outlined" fullWidth>
             Change Password
           </Button>
+
+          <EditUserDialog
+            open={isDialogOpen}
+            onClose={() => {
+              setIsDialogOpen(false);
+            }}
+            user={user}
+            onSave={(user: { email: string; name: string }) => {
+              console.log(user);
+              setUser(user);
+              toast("Update information successful!", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                type: "success",
+              });
+            }}
+          />
         </Paper>
       </Grid>
     </Grid>
