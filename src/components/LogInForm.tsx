@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 type Inputs = {
   email: string;
@@ -23,6 +24,17 @@ function LogInForm() {
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     // Handle login logic here
+    toast("Log in successful!", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      type: "success",
+    });
     console.log(data);
   };
 
