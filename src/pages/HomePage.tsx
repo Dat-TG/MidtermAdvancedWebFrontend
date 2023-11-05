@@ -1,8 +1,12 @@
 import { Button, Typography } from "@mui/material";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 function HomePage() {
   const navigate = useNavigate();
+  useEffect(() => {
+    document.title = 'Home';
+  }, []);
   return (
     <>
       <Typography variant="h1" sx={{ margin: "30px" }}>

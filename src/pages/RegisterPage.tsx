@@ -1,8 +1,13 @@
 import { Grid, Paper, Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import RegisterForm from "../components/RegisterForm";
+import { useEffect } from "react";
 
 function RegisterPage() {
+  useEffect(() => {
+    document.title = 'Register';
+  }, []);
+
   return (
     <Grid
       container
