@@ -16,8 +16,8 @@ function HomePage() {
         </>
 
         <Box gap={2} sx={{ ml: 3, display : "flex", flexWrap: "wrap" }}>
-          {[1, 2, 3, 4, 5, 6, 7].map(() => (
-            <Grid item xs={2}>
+          {[1, 2, 3, 4, 5, 6, 7].map((index) => (
+            <Grid item xs={2} key={index}>
               <CourseCard />
             </Grid>
           ))}

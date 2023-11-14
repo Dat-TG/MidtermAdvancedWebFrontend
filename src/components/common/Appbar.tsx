@@ -108,7 +108,6 @@ const PrimaryAppbar: React.FC<Props> = (props: Props) => {
       >
         Profile
       </MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
       <MenuItem onClick={props.onLogout}>Log out</MenuItem>
     </Menu>
   );
