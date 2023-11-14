@@ -108,7 +108,6 @@ const PrimaryAppbar: React.FC<Props> = (props: Props) => {
       >
         Profile
       </MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
       <MenuItem onClick={props.onLogout}>Log out</MenuItem>
     </Menu>
   );
@@ -117,8 +116,8 @@ const PrimaryAppbar: React.FC<Props> = (props: Props) => {
     <Box sx={{ flexGrow: 1 }}>
       {props.isLoggedIn && (
         <>
-          <AppBar position="static">
-            <Toolbar>
+          <AppBar position="fixed">
+            <Toolbar >
               <IconButton
                 size="large"
                 edge="start"
