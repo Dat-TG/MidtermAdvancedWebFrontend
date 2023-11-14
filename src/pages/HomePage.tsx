@@ -1,6 +1,5 @@
 import { Box, Grid, Typography } from "@mui/material";
 import { useEffect } from "react";
-import MainLayout from "../components/layout/MainLayout";
 import CourseCard from "../components/landingpage/CourseCard";
 
 function HomePage() {
@@ -10,7 +9,6 @@ function HomePage() {
 
   return (
     <>
-      <MainLayout>
         <>
           <Typography variant="h1" sx={{ margin: "30px" }}>
             Home Page
@@ -24,7 +22,6 @@ function HomePage() {
             </Grid>
           ))}
         </Box>
-      </MainLayout>
     </>
   );
 }

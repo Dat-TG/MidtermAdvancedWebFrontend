@@ -117,8 +117,8 @@ const PrimaryAppbar: React.FC<Props> = (props: Props) => {
     <Box sx={{ flexGrow: 1 }}>
       {props.isLoggedIn && (
         <>
-          <AppBar position="static">
-            <Toolbar>
+          <AppBar position="fixed">
+            <Toolbar >
               <IconButton
                 size="large"
                 edge="start"

@@ -33,7 +33,6 @@ const MiniDrawer: React.FC<Props> = (props: Props) => {
       sx={{
         display: "flex",
         flexDirection: "column",
-        height: "100vh",
         border: 1,
         borderColor: (theme) => theme.palette.divider,
         overflowX: "hidden",
@@ -42,6 +41,7 @@ const MiniDrawer: React.FC<Props> = (props: Props) => {
             ? `${drawerWidth}px`
             : "72px",
         transition: "width 0.2s, padding 0.3s",
+        marginTop: "64px"
       }}
     >
       <CssBaseline />
@@ -117,10 +117,13 @@ const MiniDrawer: React.FC<Props> = (props: Props) => {
             </ListItem>
           ))}
         </List>
+        
       </div>
+      
     </Box>
   );
 };
+
 
 export default MiniDrawer;
 
