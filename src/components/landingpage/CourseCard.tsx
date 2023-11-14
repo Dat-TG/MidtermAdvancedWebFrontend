@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { Box, Divider, Menu, MenuItem } from "@mui/material";
+import { Box, Divider, Menu, MenuItem, Tooltip } from "@mui/material";
 import React from "react";
 import { Assignment } from "@mui/icons-material";
 
@@ -65,7 +65,7 @@ const CourseCard = () => {
       <Box>
         <CardMedia
           component="img"
-          image="https://cdn.pixabay.com/photo/2015/09/23/08/51/banner-953147_1280.jpg"
+          image="https://cdn.pixabay.com/photo/2018/02/28/09/45/mountains-3187581_1280.jpg"
           alt="Paella dish"
           sx={{
             width: "100%",
@@ -81,7 +81,7 @@ const CourseCard = () => {
           avatar={
             <Box sx={{ pt: 1 }}>
               <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                R
+                K
               </Avatar>
             </Box>
           }
@@ -96,12 +96,12 @@ const CourseCard = () => {
           }
           title={
             <Typography sx={{ fontSize: 15, pt: 1 }} variant="h4">
-              Shrimp and Chorizo Paella
+              PTUDWNC-20_3
             </Typography>
           }
           subheader={
             <Typography sx={{ fontSize: 13 }} component="p">
-              September 14, 2016
+              Phát triển ứng dụng web nâng cao
             </Typography>
           }
           sx={{
@@ -120,12 +120,16 @@ const CourseCard = () => {
           disableSpacing
           sx={{ zIndex: 1, display: "flex", justifyContent: "end" }}
         >
-          <IconButton aria-label="add to favorites" sx={{ mr: 1 }}>
+          <Tooltip title="Assignments" >
+          <IconButton sx={{ mr: 1 }}>
             <Assignment />
           </IconButton>
+          </Tooltip>
+          <Tooltip title="Like" >
           <IconButton aria-label="share" sx={{ mr: 1 }}>
             <FavoriteIcon />
           </IconButton>
+          </Tooltip>
         </CardActions>
       </Box>
       {renderMenu}
