@@ -32,10 +32,10 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       <div style={{ display: "flex" }}>
         {isLoggedIn && <Sidebar open={isSidebarOpen} />}
         <main style={{ flex: 1, transition: "margin-left 0.3s" }}>
-          {children}
-          <Button
+        <Button
             sx={{
               ml: 2,
+              mt: 2
             }}
             variant="outlined"
             onClick={() => {
@@ -44,6 +44,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           >
             Change Login Mode
           </Button>
+          {children}
+          
         </main>
       </div>
     </div>
