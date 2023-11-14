@@ -1,26 +1,30 @@
-import { Button, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import MainLayout from "../components/layout/MainLayout";
+import CourseCard from "../components/landingpage/CourseCard";
 
 function HomePage() {
-  const navigate = useNavigate();
   useEffect(() => {
-    document.title = 'Home';
+    document.title = "Home";
   }, []);
+
   return (
     <>
-      <Typography variant="h1" sx={{ margin: "30px" }}>
-        Home Page
-      </Typography>
-      <Button
-        sx={{ marginLeft: "30px" }}
-        variant="contained"
-        onClick={() => {
-          navigate("/login");
-        }}
-      >
-        Login
-      </Button>
+      <MainLayout>
+        <>
+          <Typography variant="h1" sx={{ margin: "30px" }}>
+            Home Page
+          </Typography>
+        </>
+
+        <Box gap={2} sx={{ ml: 3, display : "flex", flexWrap: "wrap" }}>
+          {[1, 2, 3, 4, 5, 6, 7].map(() => (
+            <Grid item xs={2}>
+              <CourseCard />
+            </Grid>
+          ))}
+        </Box>
+      </MainLayout>
     </>
   );
 }
