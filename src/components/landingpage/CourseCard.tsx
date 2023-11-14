@@ -8,7 +8,6 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Box, Divider, Menu, MenuItem } from "@mui/material";
 import React from "react";
@@ -50,7 +49,19 @@ const CourseCard = () => {
     </Menu>
   );
   return (
-    <Card sx={{ width: 290, height: 330, position: "relative" }}>
+    <Card
+      sx={{
+        width: 290,
+        height: 330,
+        position: "relative",
+        "&:hover": {
+          transform: "scale(1.005)",
+          transition: "0.1s",
+          boxShadow: '0px 2px 15px rgba(0, 0, 0, 0.3)',
+          cursor: 'pointer'
+        },
+      }}
+    >
       <Box>
         <CardMedia
           component="img"
