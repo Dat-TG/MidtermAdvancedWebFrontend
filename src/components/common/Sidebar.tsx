@@ -9,6 +9,7 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import { Divider } from "@mui/material";
 import { CalendarMonth, Home, School } from "@mui/icons-material";
+import { useState } from "react";
 
 const drawerWidth = 240;
 
@@ -17,6 +18,16 @@ interface Props {
 }
 
 const MiniDrawer: React.FC<Props> = (props: Props) => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+
   return (
     <Box
       sx={{
@@ -26,7 +37,10 @@ const MiniDrawer: React.FC<Props> = (props: Props) => {
         border: 1,
         borderColor: (theme) => theme.palette.divider,
         overflowX: "hidden",
-        width: props.open ? `${drawerWidth}px` : "72px",
+        width:
+          props.open || (!props.open && isHovered)
+            ? `${drawerWidth}px`
+            : "72px",
         transition: "width 0.2s, padding 0.3s",
       }}
     >
@@ -34,11 +48,20 @@ const MiniDrawer: React.FC<Props> = (props: Props) => {
       <div>
         <List>
           {["Home", "Calendar"].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: "block" }}>
+            <ListItem
+              key={text}
+              disablePadding
+              sx={{ display: "block" }}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
               <ListItemButton
                 sx={{
                   minHeight: 48,
-                  justifyContent: props.open ? "initial" : "center",
+                  justifyContent:
+                    props.open || (!props.open && isHovered)
+                      ? "initial"
+                      : "center",
                   px: 2.5,
                   whiteSpace: "nowrap",
                 }}
@@ -46,13 +69,14 @@ const MiniDrawer: React.FC<Props> = (props: Props) => {
                 <ListItemIcon
                   sx={{
                     minWidth: 0,
-                    mr: props.open ? 3 : "auto",
+                    mr: props.open || (!props.open && isHovered) ? 3 : "auto",
                     justifyContent: "center",
                   }}
                 >
                   {index % 2 === 0 ? <Home /> : <CalendarMonth />}
                 </ListItemIcon>
-                {props.open && <ListItemText primary={text} />}
+                {(props.open ||
+                  (!props.open && isHovered)) && <ListItemText primary={text} />}
               </ListItemButton>
             </ListItem>
           ))}
@@ -60,11 +84,20 @@ const MiniDrawer: React.FC<Props> = (props: Props) => {
         <Divider />
         <List>
           {["School", "Inbox", "Send email", "Drafts"].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: "block" }}>
+            <ListItem
+              key={text}
+              disablePadding
+              sx={{ display: "block" }}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
               <ListItemButton
                 sx={{
                   minHeight: 48,
-                  justifyContent: props.open ? "initial" : "center",
+                  justifyContent:
+                    props.open || (!props.open && isHovered)
+                      ? "initial"
+                      : "center",
                   px: 2.5,
                   whiteSpace: "nowrap",
                 }}
@@ -72,13 +105,14 @@ const MiniDrawer: React.FC<Props> = (props: Props) => {
                 <ListItemIcon
                   sx={{
                     minWidth: 0,
-                    mr: props.open ? 3 : "auto",
+                    mr: props.open || (!props.open && isHovered) ? 3 : "auto",
                     justifyContent: "center",
                   }}
                 >
                   {index % 2 === 0 ? <School /> : <InboxIcon />}
                 </ListItemIcon>
-                {props.open && <ListItemText primary={text} />}
+                {(props.open ||
+                  (!props.open && isHovered)) && <ListItemText primary={text} />}
               </ListItemButton>
             </ListItem>
           ))}
@@ -89,3 +123,5 @@ const MiniDrawer: React.FC<Props> = (props: Props) => {
 };
 
 export default MiniDrawer;
+
+
