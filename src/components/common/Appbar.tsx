@@ -15,8 +15,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
-import { Button } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -75,6 +74,10 @@ const PrimaryAppbar: React.FC<Props> = (props: Props) => {
 
   const isMenuOpen = Boolean(anchorEl);
 
+  React.useEffect(() => {
+    setAnchorEl(null);
+  }, [props.isLoggedIn]);
+
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -117,7 +120,7 @@ const PrimaryAppbar: React.FC<Props> = (props: Props) => {
       {props.isLoggedIn && (
         <>
           <AppBar position="fixed">
-            <Toolbar >
+            <Toolbar>
               <IconButton
                 size="large"
                 edge="start"
@@ -132,7 +135,10 @@ const PrimaryAppbar: React.FC<Props> = (props: Props) => {
                 variant="h6"
                 noWrap
                 component="div"
-                sx={{ display: { xs: "none", sm: "block" } }}
+                sx={{ display: { xs: "none", sm: "block" }, cursor: "pointer" }}
+                onClick={() => {
+                  navigate("/");
+                }}
               >
                 CLASS ROOM
               </Typography>
@@ -201,33 +207,37 @@ const PrimaryAppbar: React.FC<Props> = (props: Props) => {
                 variant="h6"
                 noWrap
                 component="div"
-                sx={{ display: { xs: "none", sm: "block" } }}
+                sx={{ display: { xs: "none", sm: "block" }, cursor: "pointer" }}
+                onClick={() => {
+                  navigate("/");
+                }}
               >
                 CLASS ROOM
               </Typography>
 
               <Box sx={{ flexGrow: 1 }} />
 
-              <Button
-                variant="contained"
-                onClick={() => {
-                  navigate("/register");
-                }}
-                sx={{
-                  mr: 2,
+              <Link
+                to="/register"
+                style={{
+                  textDecoration: "none",
+                  color: "white",
+                  marginRight: "16px",
                 }}
               >
                 REGISTER
-              </Button>
+              </Link>
 
-              <Button
-                variant="contained"
-                onClick={() => {
-                  navigate("/login");
+              <Link
+                to="/login"
+                style={{
+                  textDecoration: "none",
+                  color: "white",
+                  marginRight: "2px",
                 }}
               >
-                LOG IN
-              </Button>
+                LOGIN
+              </Link>
             </Toolbar>
           </AppBar>
         </>

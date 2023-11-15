@@ -6,10 +6,13 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { emailPattern } from "../utils/helpers";
+import { Navigate } from "react-router-dom";
+import { User, useUser } from "../hooks/useUser";
+import { AuthContext } from "../context/AuthContext";
 
 type Inputs = {
   email: string;
@@ -20,6 +23,10 @@ function LogInForm() {
   useEffect(() => {
     document.title = "Log In";
   }, []);
+
+  const { user } = useContext(AuthContext);
+
+  const { login } = useUser();
 
   const {
     control,
@@ -40,10 +47,18 @@ function LogInForm() {
       theme: "light",
       type: "success",
     });
-    console.log(data);
+    login({
+      email: data.email,
+      name: "John Doe",
+    } as User);
   };
 
   const [showPassword, setShowPassword] = useState(false);
+
+  if (user != null) {
+    return <Navigate to="/" replace />;
+  }
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Typography variant="h5" align="center" fontWeight={"bold"}>

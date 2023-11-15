@@ -119,7 +119,7 @@ const MiniDrawer: React.FC<Props> = (props: Props) => {
           display: "block",
           backgroundColor:
             index === selectedIndex ? "primary.main" : "transparent",
-          color: index === selectedIndex ? "white" : "black",
+          color: index === selectedIndex ? "white" : "default",
         }}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
@@ -142,7 +142,7 @@ const MiniDrawer: React.FC<Props> = (props: Props) => {
               minWidth: 0,
               mr: props.open || (!props.open && isHovered) ? 3 : "auto",
               justifyContent: "center",
-              color: index === selectedIndex ? "white" : "black",
+              color: index === selectedIndex ? "white" : "default",
             }}
           >
             {item.icon}
