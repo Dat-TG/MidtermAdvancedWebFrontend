@@ -12,16 +12,16 @@ import { ThemeProvider } from "@mui/material";
 import theme from "./themes/theme.tsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import MainLayout from "./components/layout/MainLayout.tsx";
+import { AuthProvider } from "./context/AuthContextProvider.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <CssBaseline />
     <ToastContainer />
-    <ThemeProvider theme={theme}>
-      
-      <RouterProvider router={router} />
-      
-    </ThemeProvider>
+    <AuthProvider>
+      <ThemeProvider theme={theme}>
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    </AuthProvider>
   </React.StrictMode>
 );

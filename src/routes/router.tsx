@@ -4,34 +4,41 @@ import LogInPage from "../pages/LogInPage";
 import RegisterPage from "../pages/RegisterPage";
 import LandingPage from "../pages/LandingPage";
 import UserProfilePage from "../pages/UserProfilePage";
-import MainLayout from "../components/layout/MainLayout";
+import MainLayout from "../components/layout/main/MainLayout";
+import PrivateRoute from "../components/layout/private/PrivateRoute";
 
-const router = createBrowserRouter([{
-  element: <MainLayout />,
-  children: [
-    {
-      path: "/",
-      element: <HomePage />,
-    },
-    {
-      path: "/login",
-      element: <LogInPage />,
-    },
-    {
-      path: "/register",
-      element: <RegisterPage />,
-    },
-    {
-      path: "/landing",
-      element: <LandingPage />,
-    },
-    {
-      path: "/profile",
-      element: <UserProfilePage />,
-    },
-  ]
-}
-  
+const router = createBrowserRouter([
+  {
+    element: <MainLayout />,
+    children: [
+      {
+        element: <PrivateRoute />,
+        children: [
+          {
+            path: "/",
+            element: <HomePage />,
+          },
+          {
+            path: "/profile",
+            element: <UserProfilePage />,
+          },
+        ],
+      },
+
+      {
+        path: "/login",
+        element: <LogInPage />,
+      },
+      {
+        path: "/register",
+        element: <RegisterPage />,
+      },
+      {
+        path: "/landing",
+        element: <LandingPage />,
+      },
+    ],
+  },
 ]);
 
 export default router;
