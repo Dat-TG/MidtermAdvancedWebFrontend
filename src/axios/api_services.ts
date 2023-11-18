@@ -31,3 +31,11 @@ export const loginUser = ({
     password: password,
   });
 };
+
+export const verifyAccessToken = ({ accessToken }: { accessToken: string }) => {
+  return instance.get("/user/profile", {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+};

@@ -1,7 +1,11 @@
 import { useContext } from "react";
 import { useLocalStorage } from "./useLocalStorage";
 import { AuthContext } from "../context/AuthContext";
-import { loginUser, registerUser } from "../axios/api_services";
+import {
+  loginUser,
+  registerUser,
+  verifyAccessToken,
+} from "../axios/api_services";
 import { toast } from "react-toastify";
 
 // NOTE: optimally move this into a separate file
@@ -90,24 +94,43 @@ export const useUser = () => {
     })
       .then((response) => {
         console.log(response.data);
-        toast("Login successful!", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          type: "success",
-        });
-        changeUser({
-          firstname: "kk",
-          lastname: "kk",
-          email: emailAddress,
-          accessToken: response.data.accessToken,
-          refreshToken: response.data.refreshToken,
-        });
+        const accessToken = response.data.accessToken;
+        const refreshToken = response.data.refreshToken;
+        verifyAccessToken({ accessToken: response.data.accessToken })
+          .then((response) => {
+            toast("Login successful!", {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+              type: "success",
+            });
+            changeUser({
+              firstname: response.data.name,
+              lastname: response.data.surname,
+              email: emailAddress,
+              accessToken: accessToken,
+              refreshToken: refreshToken,
+            });
+          })
+          .catch((error) => {
+            console.log("error haha: ", error.response.data);
+            toast(error.response.data.detail.message, {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+              type: "error",
+            });
+          });
       })
       .catch((error) => {
         console.log("error haha: ", error.response.data);
