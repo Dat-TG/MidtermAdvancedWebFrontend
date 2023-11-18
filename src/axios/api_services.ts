@@ -12,3 +12,16 @@ export const registerUser = ({
     password: password,
   });
 };
+
+export const loginUser = ({
+  emailAddress,
+  password,
+}: {
+  emailAddress: string;
+  password: string;
+}) => {
+  return instance.post("/auth/login", {
+    userName: emailAddress,
+    password: password,
+  });
+};

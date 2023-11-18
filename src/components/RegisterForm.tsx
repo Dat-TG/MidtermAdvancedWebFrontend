@@ -40,10 +40,9 @@ function RegisterForm() {
     register({
       emailAddress: data.email,
       password: data.password,
-    });
+    }).then(() => setIsLoading(false));
 
     //console.log(data);
-    setIsLoading(false);
   };
 
   const [showPassword, setShowPassword] = useState(false);
