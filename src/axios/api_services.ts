@@ -39,3 +39,26 @@ export const verifyAccessToken = ({ accessToken }: { accessToken: string }) => {
     },
   });
 };
+
+export const editUserInformation = ({
+  accessToken,
+  firstname,
+  lastname,
+}: {
+  accessToken: string;
+  firstname: string;
+  lastname: string;
+}) => {
+  return instance.put(
+    "/user/edit",
+    {
+      name: firstname,
+      surname: lastname,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
+};

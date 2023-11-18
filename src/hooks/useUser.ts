@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { useLocalStorage } from "./useLocalStorage";
 import { AuthContext } from "../context/AuthContext";
 import {
+  editUserInformation,
   loginUser,
   registerUser,
   verifyAccessToken,
@@ -18,7 +19,7 @@ export interface User {
 }
 
 export const useUser = () => {
-  const { setUser } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
   const { setItem } = useLocalStorage();
 
   const changeUser = (newUser: User | null) => {
@@ -157,5 +158,54 @@ export const useUser = () => {
     changeUser(null);
   };
 
-  return { changeUser, login, logout, register };
+  const editInformation = async ({
+    firstname,
+    lastname,
+    accessToken,
+  }: {
+    firstname: string;
+    lastname: string;
+    accessToken: string;
+  }) => {
+    editUserInformation({
+      accessToken: accessToken,
+      firstname: firstname,
+      lastname: lastname,
+    })
+      .then((response) => {
+        console.log(response.data);
+        toast("Update information successful!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          type: "success",
+        });
+        changeUser({
+          ...user!,
+          firstname: firstname,
+          lastname: lastname,
+        });
+      })
+      .catch((error) => {
+        console.log("error haha: ", error.response.data);
+        toast(error.response.data.detail.message, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          type: "error",
+        });
+      });
+  };
+
+  return { changeUser, login, logout, register, editInformation };
 };
