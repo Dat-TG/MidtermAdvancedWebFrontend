@@ -62,3 +62,29 @@ export const editUserInformation = ({
     }
   );
 };
+
+export const changeUserPassword = ({
+  accessToken,
+  oldPassword,
+  newPassword,
+  confirmPassword,
+}: {
+  accessToken: string;
+  oldPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+}) => {
+  return instance.put(
+    "/user/edit/password",
+    {
+      oldPassword: oldPassword,
+      newPassword: newPassword,
+      confirmPassword: confirmPassword,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
+};

@@ -10,7 +10,6 @@ import {
   CircularProgress,
 } from "@mui/material";
 import EditUserDialog from "../components/EditUserDialog";
-import { toast } from "react-toastify";
 import ChangePasswordDialog from "../components/ChangePasswordDialog";
 import AvatarEditorComponent from "../components/AvatarEditorComponent";
 import { AuthContext } from "../context/AuthContext";
@@ -25,7 +24,7 @@ function UserProfile() {
 
   const { user } = useContext(AuthContext);
 
-  const { editInformation } = useUser();
+  const { editInformation, changePassword } = useUser();
 
   const [newAvatar, setNewAvatar] = useState("");
 
@@ -127,19 +126,16 @@ function UserProfile() {
             onChangePassword={(data: {
               oldPassword: string;
               newPassword: string;
+              confirmNewPassword: string;
             }) => {
               console.log(data);
-              toast("Change password successful!", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                type: "success",
-              });
+              setIsLoading(true);
+              changePassword({
+                accessToken: user?.accessToken ?? "",
+                oldPassword: data.oldPassword,
+                newPassword: data.newPassword,
+                confirmPassword: data.confirmNewPassword,
+              }).then(() => setIsLoading(false));
             }}
           />
         </Paper>
