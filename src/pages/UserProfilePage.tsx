@@ -1,19 +1,18 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Avatar, Button, Grid, Typography, Paper } from "@mui/material";
 import EditUserDialog from "../components/EditUserDialog";
 import { toast } from "react-toastify";
 import ChangePasswordDialog from "../components/ChangePasswordDialog";
 import AvatarEditorComponent from "../components/AvatarEditorComponent";
+import { AuthContext } from "../context/AuthContext";
 
 function UserProfile() {
   useEffect(() => {
     document.title = "My profile";
   }, []);
 
-  const [user, setUser] = useState({
-    name: "John Doe",
-    email: "john.doe@example.com",
-  });
+  const {user, setUser}=useContext(AuthContext);
+
 
   const [newAvatar, setNewAvatar] = useState("");
 
@@ -37,7 +36,7 @@ function UserProfile() {
       <Grid item xs={12} sm={8} md={6} lg={4}>
         <Paper elevation={3} style={{ padding: "32px" }}>
           <Avatar
-            alt={user.name}
+            alt={/*user?.name*/"Joh Doe"}
             src={newAvatar || "/path-to-avatar-image.jpg"}
             sx={{
               width: {
@@ -57,12 +56,12 @@ function UserProfile() {
 
           <div>
             <Typography variant="body1" style={{ textAlign: "center" }}>
-              Email: {user.email}
+              Email: {user?.email??"email@example.com"}
             </Typography>
           </div>
           <div>
             <Typography variant="body1" style={{ textAlign: "center" }}>
-              Name: {user.name}
+              Name: {/*user?.name*/ "John Doe"}
             </Typography>
           </div>
 
@@ -93,7 +92,7 @@ function UserProfile() {
             onClose={() => {
               setIsEditUserDialogOpen(false);
             }}
-            user={user}
+            user={{email:user?.email??"email@example.com", name:"John Doe"}}
             onSave={(user: { email: string; name: string }) => {
               console.log(user);
               setUser(user);

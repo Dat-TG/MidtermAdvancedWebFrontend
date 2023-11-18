@@ -1,24 +1,32 @@
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   Button,
+  CircularProgress,
   IconButton,
   InputAdornment,
   TextField,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { toast } from "react-toastify";
 import { emailPattern } from "../utils/helpers";
+import { AuthContext } from "../context/AuthContext";
+import { Navigate } from "react-router-dom";
+import { useUser } from "../hooks/useUser";
 
 type Inputs = {
   email: string;
-  name: string;
+  //name: string;
   password: string;
   confirmPassword: string;
 };
 
 function RegisterForm() {
+  const { user } = useContext(AuthContext);
+  const { register } = useUser();
+
+  const [isLoading, setIsLoading] = useState(false);
+
   const {
     control,
     handleSubmit,
@@ -27,23 +35,24 @@ function RegisterForm() {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    // Handle login logic here
-    toast("Register successful!", {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      type: "success",
+    // Handle register logic here
+    setIsLoading(true);
+    register({
+      emailAddress: data.email,
+      password: data.password,
     });
-    console.log(data);
+
+    //console.log(data);
+    setIsLoading(false);
   };
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassord] = useState(false);
+
+  if (user != null) {
+    return <Navigate to="/" replace />;
+  }
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Typography variant="h5" align="center" fontWeight={"bold"}>
@@ -74,7 +83,7 @@ function RegisterForm() {
         )}
       />
       {/* Name input */}
-      <Controller
+      {/* <Controller
         name="name"
         control={control}
         rules={{
@@ -93,7 +102,8 @@ function RegisterForm() {
             helperText={errors.name ? "Please enter your name." : ""}
           />
         )}
-      />
+      />*/}
+
       {/* Password input */}
       <Controller
         name="password"
@@ -175,7 +185,11 @@ function RegisterForm() {
         style={{ marginTop: "32px" }}
         size="large"
       >
-        <Typography fontSize={"16px"}>Register</Typography>
+        {isLoading ? (
+          <CircularProgress size={30} style={{ color: "white" }} />
+        ) : (
+          <Typography fontSize={"16px"}>Register</Typography>
+        )}
       </Button>
     </form>
   );
