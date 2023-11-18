@@ -1,6 +1,7 @@
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   Button,
+  CircularProgress,
   IconButton,
   InputAdornment,
   TextField,
@@ -8,10 +9,9 @@ import {
 } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { toast } from "react-toastify";
 import { emailPattern } from "../utils/helpers";
 import { Navigate } from "react-router-dom";
-import { User, useUser } from "../hooks/useUser";
+import { useUser } from "../hooks/useUser";
 import { AuthContext } from "../context/AuthContext";
 
 type Inputs = {
@@ -35,25 +35,17 @@ function LogInForm() {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
+    setIsLoading(true);
     // Handle login logic here
-    toast("Log in successful!", {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      type: "success",
-    });
     login({
-      email: data.email,
-      name: "John Doe",
-    } as User);
+      emailAddress: data.email,
+      password: data.password,
+    }).then(() => setIsLoading(false));
   };
 
   const [showPassword, setShowPassword] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   if (user != null) {
     return <Navigate to="/" replace />;
@@ -132,7 +124,11 @@ function LogInForm() {
         style={{ marginTop: "32px" }}
         size="large"
       >
-        <Typography fontSize={"16px"}>Login</Typography>
+        {isLoading ? (
+          <CircularProgress size={30} style={{ color: "white" }} />
+        ) : (
+          <Typography fontSize={"16px"}>Login</Typography>
+        )}
       </Button>
     </form>
   );

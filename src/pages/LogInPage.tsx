@@ -8,7 +8,7 @@ function LogInPage() {
       container
       justifyContent="center"
       alignItems="center"
-      style={{ minHeight: "100vh" }}
+      style={{ minHeight: "80vh" }}
     >
       <Grid item xs={12} sm={8} md={6} lg={4}>
         <Paper elevation={3} style={{ padding: "32px" }}>

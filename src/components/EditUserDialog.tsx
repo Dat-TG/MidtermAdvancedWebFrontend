@@ -7,17 +7,16 @@ import {
   TextField,
 } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
-import { emailPattern } from "../utils/helpers";
 
 interface Inputs {
-  email: string;
-  name: string;
+  firstname: string;
+  lastname: string;
 }
 
 interface EditUserDialogProps {
   open: boolean; // Specify the type of 'open' as a boolean
   onClose: () => void;
-  user: { email: string; name: string }; // Adjust the type for 'user' as needed
+  user: { firstname: string; lastname: string }; // Adjust the type for 'user' as needed
   onSave: (user: Inputs) => void;
 }
 
@@ -40,39 +39,35 @@ function EditUserDialog({ open, onClose, user, onSave }: EditUserDialogProps) {
       <DialogContent>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Controller
-            name="email"
+            name="firstname"
             control={control}
-            defaultValue={user.email}
+            defaultValue={user.firstname}
             rules={{
-              required: "Email is required",
-              pattern: {
-                value: emailPattern,
-                message: "Please enter a valid email address",
-              },
+              required: "First name is required",
             }}
             render={({ field }) => (
               <TextField
                 sx={{ marginTop: "32px" }}
                 fullWidth
-                label="Email"
-                error={!!errors.email}
-                helperText={errors.email?.message}
+                label="First Name"
+                error={!!errors.firstname}
+                helperText={errors.firstname?.message}
                 {...field}
               />
             )}
           />
           <Controller
-            name="name"
+            name="lastname"
             control={control}
-            defaultValue={user.name}
-            rules={{ required: "Name is required" }}
+            defaultValue={user.lastname}
+            rules={{ required: "Last name is required" }}
             render={({ field }) => (
               <TextField
                 sx={{ marginTop: "32px", marginBottom: "32px" }}
                 fullWidth
-                label="Name"
-                error={!!errors.name}
-                helperText={errors.name?.message}
+                label="Last Name"
+                error={!!errors.lastname}
+                helperText={errors.lastname?.message}
                 {...field}
               />
             )}

@@ -18,6 +18,7 @@ interface ChangePasswordDialogProps {
   onChangePassword: (data: {
     oldPassword: string;
     newPassword: string;
+    confirmNewPassword: string
   }) => void;
 }
 

@@ -1,19 +1,30 @@
-import { useEffect, useState } from "react";
-import { Avatar, Button, Grid, Typography, Paper } from "@mui/material";
+import { useContext, useEffect, useState } from "react";
+import {
+  Avatar,
+  Button,
+  Grid,
+  Typography,
+  Paper,
+  Modal,
+  Box,
+  CircularProgress,
+} from "@mui/material";
 import EditUserDialog from "../components/EditUserDialog";
-import { toast } from "react-toastify";
 import ChangePasswordDialog from "../components/ChangePasswordDialog";
 import AvatarEditorComponent from "../components/AvatarEditorComponent";
+import { AuthContext } from "../context/AuthContext";
+import { useUser } from "../hooks/useUser";
 
 function UserProfile() {
   useEffect(() => {
     document.title = "My profile";
   }, []);
 
-  const [user, setUser] = useState({
-    name: "John Doe",
-    email: "john.doe@example.com",
-  });
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { user } = useContext(AuthContext);
+
+  const { editInformation, changePassword } = useUser();
 
   const [newAvatar, setNewAvatar] = useState("");
 
@@ -37,7 +48,7 @@ function UserProfile() {
       <Grid item xs={12} sm={8} md={6} lg={4}>
         <Paper elevation={3} style={{ padding: "32px" }}>
           <Avatar
-            alt={user.name}
+            alt={`${user?.firstname} ${user?.lastname}`}
             src={newAvatar || "/path-to-avatar-image.jpg"}
             sx={{
               width: {
@@ -57,12 +68,12 @@ function UserProfile() {
 
           <div>
             <Typography variant="body1" style={{ textAlign: "center" }}>
-              Email: {user.email}
+              Email: {user?.email ?? "email@example.com"}
             </Typography>
           </div>
           <div>
             <Typography variant="body1" style={{ textAlign: "center" }}>
-              Name: {user.name}
+              Name: {`${user?.firstname} ${user?.lastname}`}
             </Typography>
           </div>
 
@@ -93,21 +104,17 @@ function UserProfile() {
             onClose={() => {
               setIsEditUserDialogOpen(false);
             }}
-            user={user}
-            onSave={(user: { email: string; name: string }) => {
-              console.log(user);
-              setUser(user);
-              toast("Update information successful!", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                type: "success",
-              });
+            user={{
+              firstname: user?.firstname ?? "John",
+              lastname: user?.lastname ?? "Doe",
+            }}
+            onSave={(newUser: { firstname: string; lastname: string }) => {
+              setIsLoading(true);
+              editInformation({
+                accessToken: user?.accessToken ?? "",
+                firstname: newUser.firstname,
+                lastname: newUser.lastname,
+              }).then(() => setIsLoading(false));
             }}
           />
 
@@ -119,23 +126,34 @@ function UserProfile() {
             onChangePassword={(data: {
               oldPassword: string;
               newPassword: string;
+              confirmNewPassword: string;
             }) => {
               console.log(data);
-              toast("Change password successful!", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                type: "success",
-              });
+              setIsLoading(true);
+              changePassword({
+                accessToken: user?.accessToken ?? "",
+                oldPassword: data.oldPassword,
+                newPassword: data.newPassword,
+                confirmPassword: data.confirmNewPassword,
+              }).then(() => setIsLoading(false));
             }}
           />
         </Paper>
       </Grid>
+      <Modal
+        open={isLoading}
+        onClose={() => {}}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{ padding: "8px" }}
+          justifyContent={"center"}
+          alignItems={"center"}
+        >
+          <CircularProgress />
+        </Box>
+      </Modal>
     </Grid>
   );
 }
