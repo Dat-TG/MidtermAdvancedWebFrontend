@@ -88,3 +88,11 @@ export const changeUserPassword = ({
     }
   );
 };
+
+export const logoutUser = ({ accessToken }: { accessToken: string }) => {
+  return instance.get("/auth/logout", {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+};

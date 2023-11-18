@@ -5,6 +5,7 @@ import {
   changeUserPassword,
   editUserInformation,
   loginUser,
+  logoutUser,
   registerUser,
   verifyAccessToken,
 } from "../axios/api_services";
@@ -156,7 +157,38 @@ export const useUser = () => {
   };
 
   const logout = () => {
-    changeUser(null);
+    logoutUser({
+      accessToken: user?.accessToken ?? "",
+    })
+      .then((response) => {
+        console.log(response.data);
+        changeUser(null);
+        toast("You have been logged out", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          type: "success",
+        });
+      })
+      .catch((error) => {
+        console.log("error haha: ", error.response.data);
+        toast(error.response.data.detail.message, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          type: "error",
+        });
+      });
   };
 
   const editInformation = async ({
@@ -227,6 +259,7 @@ export const useUser = () => {
     })
       .then((response) => {
         console.log(response.data);
+        logout();
         toast("Change password successful! Please re-login to your account.", {
           position: "top-right",
           autoClose: 5000,
