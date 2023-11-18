@@ -11,8 +11,7 @@ function UserProfile() {
     document.title = "My profile";
   }, []);
 
-  const {user, setUser}=useContext(AuthContext);
-
+  const { user, setUser } = useContext(AuthContext);
 
   const [newAvatar, setNewAvatar] = useState("");
 
@@ -36,7 +35,7 @@ function UserProfile() {
       <Grid item xs={12} sm={8} md={6} lg={4}>
         <Paper elevation={3} style={{ padding: "32px" }}>
           <Avatar
-            alt={/*user?.name*/"Joh Doe"}
+            alt={`${user?.firstname} ${user?.lastname}`}
             src={newAvatar || "/path-to-avatar-image.jpg"}
             sx={{
               width: {
@@ -56,12 +55,12 @@ function UserProfile() {
 
           <div>
             <Typography variant="body1" style={{ textAlign: "center" }}>
-              Email: {user?.email??"email@example.com"}
+              Email: {user?.email ?? "email@example.com"}
             </Typography>
           </div>
           <div>
             <Typography variant="body1" style={{ textAlign: "center" }}>
-              Name: {/*user?.name*/ "John Doe"}
+              Name: {`${user?.firstname} ${user?.lastname}`}
             </Typography>
           </div>
 
@@ -92,8 +91,16 @@ function UserProfile() {
             onClose={() => {
               setIsEditUserDialogOpen(false);
             }}
-            user={{email:user?.email??"email@example.com", name:"John Doe"}}
-            onSave={(user: { email: string; name: string }) => {
+            user={{
+              email: user?.email ?? "email@example.com",
+              name: "John Doe",
+            }}
+            onSave={(user: {
+              email: string;
+              name: string;
+              firstname: string;
+              lastname: string;
+            }) => {
               console.log(user);
               setUser(user);
               toast("Update information successful!", {

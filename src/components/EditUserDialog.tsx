@@ -12,6 +12,8 @@ import { emailPattern } from "../utils/helpers";
 interface Inputs {
   email: string;
   name: string;
+  firstname: string;
+  lastname: string;
 }
 
 interface EditUserDialogProps {

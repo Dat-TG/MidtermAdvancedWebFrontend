@@ -6,7 +6,8 @@ import { toast } from "react-toastify";
 
 // NOTE: optimally move this into a separate file
 export interface User {
-  //name: string;
+  firstname: string;
+  lastname: string;
   email: string;
   accessToken?: string;
   refreshToken?: string;
@@ -25,13 +26,19 @@ export const useUser = () => {
   const register = async ({
     emailAddress,
     password,
+    firstname,
+    lastname,
   }: {
     emailAddress: string;
     password: string;
+    firstname: string;
+    lastname: string;
   }) => {
     registerUser({
       emailAddress: emailAddress,
       password: password,
+      firstname: firstname,
+      lastname: lastname,
     })
       .then((response) => {
         console.log(response.data);
@@ -47,6 +54,8 @@ export const useUser = () => {
           type: "success",
         });
         changeUser({
+          firstname: firstname,
+          lastname: lastname,
           email: emailAddress,
           accessToken: response.data.accessToken,
           refreshToken: response.data.refreshToken,
@@ -93,6 +102,8 @@ export const useUser = () => {
           type: "success",
         });
         changeUser({
+          firstname: "kk",
+          lastname: "kk",
           email: emailAddress,
           accessToken: response.data.accessToken,
           refreshToken: response.data.refreshToken,

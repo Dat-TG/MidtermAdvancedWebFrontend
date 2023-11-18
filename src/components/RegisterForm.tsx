@@ -16,7 +16,8 @@ import { useUser } from "../hooks/useUser";
 
 type Inputs = {
   email: string;
-  //name: string;
+  firstname: string;
+  lastname: string;
   password: string;
   confirmPassword: string;
 };
@@ -40,6 +41,8 @@ function RegisterForm() {
     register({
       emailAddress: data.email,
       password: data.password,
+      firstname: data.firstname,
+      lastname: data.lastname,
     }).then(() => setIsLoading(false));
 
     //console.log(data);
@@ -81,9 +84,10 @@ function RegisterForm() {
           />
         )}
       />
-      {/* Name input */}
-      {/* <Controller
-        name="name"
+
+      {/* First Name input */}
+      <Controller
+        name="firstname"
         control={control}
         rules={{
           required: true,
@@ -93,15 +97,37 @@ function RegisterForm() {
           <TextField
             style={{ marginTop: "32px" }}
             {...field}
-            label="Name"
+            label="First Name"
             fullWidth
             variant="outlined"
-            error={!!errors.name}
+            error={!!errors.firstname}
             placeholder=""
-            helperText={errors.name ? "Please enter your name." : ""}
+            helperText={errors.firstname ? "Please enter your first name." : ""}
           />
         )}
-      />*/}
+      />
+
+      {/* Last Name input */}
+      <Controller
+        name="lastname"
+        control={control}
+        rules={{
+          required: true,
+        }}
+        defaultValue=""
+        render={({ field }) => (
+          <TextField
+            style={{ marginTop: "32px" }}
+            {...field}
+            label="Last Name"
+            fullWidth
+            variant="outlined"
+            error={!!errors.lastname}
+            placeholder=""
+            helperText={errors.lastname ? "Please enter your last name." : ""}
+          />
+        )}
+      />
 
       {/* Password input */}
       <Controller
