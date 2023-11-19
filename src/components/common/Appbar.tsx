@@ -11,7 +11,6 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
-import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
@@ -185,17 +184,13 @@ const PrimaryAppbar: React.FC<Props> = (props: Props) => {
                   onClick={handleProfileMenuOpen}
                   color="inherit"
                 >
-                  {user != null ? (
-                    <Avatar
-                      alt={`${user.firstname} ${user.lastname}`}
-                      src={user.avatar}
-                      style={{
-                        border: "2px solid white",
-                      }}
-                    />
-                  ) : (
-                    <AccountCircle />
-                  )}
+                  <Avatar
+                    alt={`${user?.firstname} ${user?.lastname}`}
+                    src={user?.avatar}
+                    style={{
+                      border: "2px solid white",
+                    }}
+                  />
                 </IconButton>
               </Box>
               <Box sx={{ display: { xs: "flex", md: "none" } }}>

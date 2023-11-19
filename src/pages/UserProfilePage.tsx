@@ -5,9 +5,8 @@ import {
   Grid,
   Typography,
   Paper,
-  Modal,
-  Box,
   CircularProgress,
+  Backdrop,
 } from "@mui/material";
 import EditUserDialog from "../components/EditUserDialog";
 import ChangePasswordDialog from "../components/ChangePasswordDialog";
@@ -47,7 +46,7 @@ function UserProfile() {
         <Paper elevation={3} style={{ padding: "32px" }}>
           <Avatar
             alt={`${user?.firstname} ${user?.lastname}`}
-            src={user?.avatar??""}
+            src={user?.avatar ?? ""}
             sx={{
               width: {
                 md: 150,
@@ -106,13 +105,17 @@ function UserProfile() {
               firstname: user?.firstname ?? "John",
               lastname: user?.lastname ?? "Doe",
             }}
-            onSave={(newUser: { firstname: string; lastname: string }) => {
+            onSave={async (newUser: {
+              firstname: string;
+              lastname: string;
+            }) => {
               setIsLoading(true);
               editInformation({
                 accessToken: user?.accessToken ?? "",
                 firstname: newUser.firstname,
                 lastname: newUser.lastname,
-              }).then(() => setIsLoading(false));
+              });
+              setIsLoading(false);
             }}
           />
 
@@ -121,7 +124,7 @@ function UserProfile() {
             onClose={() => {
               setIsChangePasswordDialogOpen(false);
             }}
-            onChangePassword={(data: {
+            onChangePassword={async (data: {
               oldPassword: string;
               newPassword: string;
               confirmNewPassword: string;
@@ -133,25 +136,19 @@ function UserProfile() {
                 oldPassword: data.oldPassword,
                 newPassword: data.newPassword,
                 confirmPassword: data.confirmNewPassword,
-              }).then(() => setIsLoading(false));
+              });
+              setIsLoading(false);
             }}
           />
         </Paper>
       </Grid>
-      <Modal
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={isLoading}
-        onClose={() => {}}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+        onClick={() => {}}
       >
-        <Box
-          sx={{ padding: "8px" }}
-          justifyContent={"center"}
-          alignItems={"center"}
-        >
-          <CircularProgress />
-        </Box>
-      </Modal>
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </Grid>
   );
 }

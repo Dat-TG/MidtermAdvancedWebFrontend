@@ -35,15 +35,16 @@ function RegisterForm() {
     getValues,
   } = useForm<Inputs>();
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
     // Handle register logic here
     setIsLoading(true);
-    register({
+    await register({
       emailAddress: data.email,
       password: data.password,
       firstname: data.firstname,
       lastname: data.lastname,
-    }).then(() => setIsLoading(false));
+    });
+    setIsLoading(false);
 
     //console.log(data);
   };

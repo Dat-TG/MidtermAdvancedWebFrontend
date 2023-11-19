@@ -20,6 +20,8 @@ type Inputs = {
 };
 
 function LogInForm() {
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     document.title = "Log In";
   }, []);
@@ -34,18 +36,17 @@ function LogInForm() {
     formState: { errors },
   } = useForm<Inputs>();
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setIsLoading(true);
     // Handle login logic here
-    login({
+    await login({
       emailAddress: data.email,
       password: data.password,
-    }).then(() => setIsLoading(false));
+    });
+    setIsLoading(false);
   };
 
   const [showPassword, setShowPassword] = useState(false);
-
-  const [isLoading, setIsLoading] = useState(false);
 
   if (user != null) {
     return <Navigate to="/" replace />;
@@ -123,6 +124,7 @@ function LogInForm() {
         fullWidth
         style={{ marginTop: "32px" }}
         size="large"
+        disabled={isLoading}
       >
         {isLoading ? (
           <CircularProgress size={30} style={{ color: "white" }} />
