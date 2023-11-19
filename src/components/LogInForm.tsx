@@ -10,9 +10,9 @@ import {
 import { useContext, useEffect, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { emailPattern } from "../utils/helpers";
-import { Navigate } from "react-router-dom";
-import { useUser } from "../hooks/useUser";
+import { Navigate } from 'react-router-dom';
 import { AuthContext } from "../context/AuthContext";
+import { loginUser } from '@/store/user/thunkApi';
 
 type Inputs = {
   email: string;
@@ -21,12 +21,10 @@ type Inputs = {
 
 function LogInForm() {
   useEffect(() => {
-    document.title = "Log In";
+    document.title = 'Log In';
   }, []);
 
   const { user } = useContext(AuthContext);
-
-  const { login } = useUser();
 
   const {
     control,
@@ -37,10 +35,11 @@ function LogInForm() {
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     setIsLoading(true);
     // Handle login logic here
-    login({
+    loginUser({
       emailAddress: data.email,
       password: data.password,
-    }).then(() => setIsLoading(false));
+    });
+    setIsLoading(false);
   };
 
   const [showPassword, setShowPassword] = useState(false);
@@ -53,7 +52,7 @@ function LogInForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Typography variant="h5" align="center" fontWeight={"bold"}>
+      <Typography variant="h5" align="center" fontWeight={'bold'}>
         LOG IN
       </Typography>
       <Controller
@@ -66,7 +65,7 @@ function LogInForm() {
         defaultValue=""
         render={({ field }) => (
           <TextField
-            style={{ marginTop: "48px" }}
+            style={{ marginTop: '48px' }}
             {...field}
             label="Email"
             fullWidth
@@ -75,7 +74,7 @@ function LogInForm() {
             error={!!errors.email}
             placeholder="email@example.com"
             helperText={
-              errors.email ? "Please enter a valid email address." : ""
+              errors.email ? 'Please enter a valid email address.' : ''
             }
           />
         )}
@@ -87,7 +86,7 @@ function LogInForm() {
         defaultValue=""
         render={({ field }) => (
           <TextField
-            style={{ marginTop: "32px" }}
+            style={{ marginTop: '32px' }}
             {...field}
             label="Password"
             fullWidth
@@ -95,17 +94,17 @@ function LogInForm() {
             error={!!errors.password}
             helperText={
               errors.password
-                ? "Password is required and should be at least 6 characters."
-                : ""
+                ? 'Password is required and should be at least 6 characters.'
+                : ''
             }
-            type={showPassword ? "text" : "password"}
+            type={showPassword ? 'text' : 'password'}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
                   <IconButton
                     size="small"
                     onClick={() => setShowPassword(!showPassword)}
-                    style={{ display: field.value ? "flex" : "none" }}
+                    style={{ display: field.value ? 'flex' : 'none' }}
                     edge="end"
                   >
                     {showPassword ? <Visibility /> : <VisibilityOff />}
@@ -121,13 +120,13 @@ function LogInForm() {
         variant="contained"
         color="primary"
         fullWidth
-        style={{ marginTop: "32px" }}
+        style={{ marginTop: '32px' }}
         size="large"
       >
         {isLoading ? (
-          <CircularProgress size={30} style={{ color: "white" }} />
+          <CircularProgress size={30} style={{ color: 'white' }} />
         ) : (
-          <Typography fontSize={"16px"}>Login</Typography>
+          <Typography fontSize={'16px'}>Login</Typography>
         )}
       </Button>
     </form>

@@ -12,7 +12,11 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { emailPattern } from "../utils/helpers";
 import { AuthContext } from "../context/AuthContext";
 import { Navigate } from "react-router-dom";
-import { useUser } from "../hooks/useUser";
+import { registerUser } from '@/store/user/thunkApi';
+import { AppDispatch, AppState } from '@/store';
+import { IRegisterUserReq } from '@/types';
+import { connect } from 'react-redux';
+// import { useUser } from "../hooks/useUser";
 
 type Inputs = {
   email: string;
@@ -22,9 +26,13 @@ type Inputs = {
   confirmPassword: string;
 };
 
-function RegisterForm() {
+interface IRegisterForm {
+  pRegisterUser: (params: IRegisterUserReq) => Promise<unknown>
+}
+
+const RegisterForm = ({pRegisterUser}: IRegisterForm) => {
   const { user } = useContext(AuthContext);
-  const { register } = useUser();
+  // const { register } = useUser();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -38,13 +46,13 @@ function RegisterForm() {
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     // Handle register logic here
     setIsLoading(true);
-    register({
+    pRegisterUser({
       emailAddress: data.email,
       password: data.password,
       firstname: data.firstname,
       lastname: data.lastname,
-    }).then(() => setIsLoading(false));
-
+    });
+    setIsLoading(false);
     //console.log(data);
   };
 
@@ -57,7 +65,7 @@ function RegisterForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Typography variant="h5" align="center" fontWeight={"bold"}>
+      <Typography variant="h5" align="center" fontWeight={'bold'}>
         REGISTER
       </Typography>
       {/* Email input */}
@@ -71,7 +79,7 @@ function RegisterForm() {
         defaultValue=""
         render={({ field }) => (
           <TextField
-            style={{ marginTop: "48px" }}
+            style={{ marginTop: '48px' }}
             {...field}
             label="Email"
             fullWidth
@@ -79,7 +87,7 @@ function RegisterForm() {
             error={!!errors.email}
             placeholder="email@example.com"
             helperText={
-              errors.email ? "Please enter a valid email address." : ""
+              errors.email ? 'Please enter a valid email address.' : ''
             }
           />
         )}
@@ -95,14 +103,14 @@ function RegisterForm() {
         defaultValue=""
         render={({ field }) => (
           <TextField
-            style={{ marginTop: "32px" }}
+            style={{ marginTop: '32px' }}
             {...field}
             label="First Name"
             fullWidth
             variant="outlined"
             error={!!errors.firstname}
             placeholder=""
-            helperText={errors.firstname ? "Please enter your first name." : ""}
+            helperText={errors.firstname ? 'Please enter your first name.' : ''}
           />
         )}
       />
@@ -117,14 +125,14 @@ function RegisterForm() {
         defaultValue=""
         render={({ field }) => (
           <TextField
-            style={{ marginTop: "32px" }}
+            style={{ marginTop: '32px' }}
             {...field}
             label="Last Name"
             fullWidth
             variant="outlined"
             error={!!errors.lastname}
             placeholder=""
-            helperText={errors.lastname ? "Please enter your last name." : ""}
+            helperText={errors.lastname ? 'Please enter your last name.' : ''}
           />
         )}
       />
@@ -137,7 +145,7 @@ function RegisterForm() {
         defaultValue=""
         render={({ field }) => (
           <TextField
-            style={{ marginTop: "32px" }}
+            style={{ marginTop: '32px' }}
             {...field}
             label="Password"
             fullWidth
@@ -145,17 +153,17 @@ function RegisterForm() {
             error={!!errors.password}
             helperText={
               errors.password
-                ? "Password is required and should be at least 6 characters."
-                : ""
+                ? 'Password is required and should be at least 6 characters.'
+                : ''
             }
-            type={showPassword ? "text" : "password"}
+            type={showPassword ? 'text' : 'password'}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
                   <IconButton
                     size="small"
                     onClick={() => setShowPassword(!showPassword)}
-                    style={{ display: field.value ? "flex" : "none" }}
+                    style={{ display: field.value ? 'flex' : 'none' }}
                     edge="end"
                   >
                     {showPassword ? <Visibility /> : <VisibilityOff />}
@@ -172,26 +180,26 @@ function RegisterForm() {
         control={control}
         rules={{
           required: true,
-          validate: (value) => value === getValues("password"),
+          validate: (value) => value === getValues('password'),
         }}
         defaultValue=""
         render={({ field }) => (
           <TextField
-            style={{ marginTop: "32px" }}
+            style={{ marginTop: '32px' }}
             {...field}
             label="Confirm Password"
             fullWidth
             variant="outlined"
             error={!!errors.confirmPassword}
-            helperText={errors.confirmPassword ? "Passwords do not match." : ""}
-            type={showConfirmPassword ? "text" : "password"}
+            helperText={errors.confirmPassword ? 'Passwords do not match.' : ''}
+            type={showConfirmPassword ? 'text' : 'password'}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
                   <IconButton
                     size="small"
                     onClick={() => setShowConfirmPassord(!showConfirmPassword)}
-                    style={{ display: field.value ? "flex" : "none" }}
+                    style={{ display: field.value ? 'flex' : 'none' }}
                     edge="end"
                   >
                     {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
@@ -207,17 +215,25 @@ function RegisterForm() {
         variant="contained"
         color="primary"
         fullWidth
-        style={{ marginTop: "32px" }}
+        style={{ marginTop: '32px' }}
         size="large"
       >
         {isLoading ? (
-          <CircularProgress size={30} style={{ color: "white" }} />
+          <CircularProgress size={30} style={{ color: 'white' }} />
         ) : (
-          <Typography fontSize={"16px"}>Register</Typography>
+          <Typography fontSize={'16px'}>Register</Typography>
         )}
       </Button>
     </form>
   );
-}
+};
 
-export default RegisterForm;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const mapStateToProps = (_state: AppState) => ({});
+
+const mapDispatchToProps = (dispatch: AppDispatch) => ({
+  pRegisterUser: (params: IRegisterUserReq) => dispatch(registerUser(params)),
+});
+
+// eslint-disable-next-line react-refresh/only-export-components
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm);

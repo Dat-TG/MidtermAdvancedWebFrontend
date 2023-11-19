@@ -1,17 +1,13 @@
-import instance from "./axios";
+import { ILoginUserReq, IRegisterUserReq } from '@/types';
+import instance from './axios';
 
 export const registerUser = ({
   emailAddress,
   password,
   firstname,
   lastname,
-}: {
-  emailAddress: string;
-  password: string;
-  firstname: string;
-  lastname: string;
-}) => {
-  return instance.post("/auth/register", {
+}: IRegisterUserReq) => {
+  return instance.post('/auth/register', {
     emailAddress: emailAddress,
     password: password,
     firstName: firstname,
@@ -19,21 +15,15 @@ export const registerUser = ({
   });
 };
 
-export const loginUser = ({
-  emailAddress,
-  password,
-}: {
-  emailAddress: string;
-  password: string;
-}) => {
-  return instance.post("/auth/login", {
+export const loginUser = ({ emailAddress, password }: ILoginUserReq) => {
+  return instance.post('/auth/login', {
     userName: emailAddress,
     password: password,
   });
 };
 
 export const verifyAccessToken = ({ accessToken }: { accessToken: string }) => {
-  return instance.get("/user/profile", {
+  return instance.get('/user/profile', {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
@@ -50,7 +40,7 @@ export const editUserInformation = ({
   lastname: string;
 }) => {
   return instance.put(
-    "/user/edit",
+    '/user/edit',
     {
       name: firstname,
       surname: lastname,
@@ -75,7 +65,7 @@ export const changeUserPassword = ({
   confirmPassword: string;
 }) => {
   return instance.put(
-    "/user/edit/password",
+    '/user/edit/password',
     {
       oldPassword: oldPassword,
       newPassword: newPassword,
@@ -90,7 +80,7 @@ export const changeUserPassword = ({
 };
 
 export const logoutUser = ({ accessToken }: { accessToken: string }) => {
-  return instance.get("/auth/logout", {
+  return instance.get('/auth/logout', {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { User } from "../hooks/useUser";
+import { IUser } from '@/types';
 import { AuthContext } from "./AuthContext";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
@@ -9,11 +9,11 @@ interface ContextProviderProps {
 
 export const AuthProvider: React.FC<ContextProviderProps> = ({children}) => {
     const {getItem} = useLocalStorage();
-    const [user, setUser] = useState<User | null>(()=>{
-        const userFromLocalStorage = getItem("user");
-        if (userFromLocalStorage) {
-          return (JSON.parse(userFromLocalStorage));
-        }
+    const [user, setUser] = useState<IUser | null>(() => {
+      const userFromLocalStorage = getItem('user');
+      if (userFromLocalStorage) {
+        return JSON.parse(userFromLocalStorage);
+      }
     });
   
     return (
