@@ -106,6 +106,7 @@ const PrimaryAppbar: React.FC<Props> = (props: Props) => {
     >
       <MenuItem
         onClick={() => {
+          setAnchorEl(null);
           navigate("/profile");
         }}
       >
@@ -209,7 +210,7 @@ const PrimaryAppbar: React.FC<Props> = (props: Props) => {
                 component="div"
                 sx={{ display: { xs: "none", sm: "block" }, cursor: "pointer" }}
                 onClick={() => {
-                  navigate("/");
+                  navigate("/landing");
                 }}
               >
                 CLASS ROOM
