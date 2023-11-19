@@ -26,8 +26,6 @@ function UserProfile() {
 
   const { editInformation, changePassword } = useUser();
 
-  const [newAvatar, setNewAvatar] = useState("");
-
   const [isEditUserDialogOpen, setIsEditUserDialogOpen] = useState(false);
   const [isChangePasswordDialogOpen, setIsChangePasswordDialogOpen] =
     useState(false);
@@ -49,7 +47,7 @@ function UserProfile() {
         <Paper elevation={3} style={{ padding: "32px" }}>
           <Avatar
             alt={`${user?.firstname} ${user?.lastname}`}
-            src={newAvatar || "/path-to-avatar-image.jpg"}
+            src={user?.avatar??""}
             sx={{
               width: {
                 md: 150,
@@ -64,7 +62,7 @@ function UserProfile() {
               margin: "0 auto",
             }}
           />
-          <AvatarEditorComponent setAvatar={setNewAvatar} />
+          <AvatarEditorComponent />
 
           <div>
             <Typography variant="body1" style={{ textAlign: "center" }}>

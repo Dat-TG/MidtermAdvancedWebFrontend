@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { useLocalStorage } from "./useLocalStorage";
 import { AuthContext } from "../context/AuthContext";
 import {
+  changeAvatarUser,
   changeUserPassword,
   editUserInformation,
   loginUser,
@@ -18,6 +19,7 @@ export interface User {
   email: string;
   accessToken?: string;
   refreshToken?: string;
+  avatar?: string;
 }
 
 export const useUser = () => {
@@ -118,6 +120,7 @@ export const useUser = () => {
               email: emailAddress,
               accessToken: accessToken,
               refreshToken: refreshToken,
+              avatar: response.data.avatar,
             });
           })
           .catch((error) => {
@@ -288,6 +291,49 @@ export const useUser = () => {
       });
   };
 
+  const changeAvatar = ({ imageFile }: { imageFile: Blob }) => {
+    changeAvatarUser({
+      accessToken: user?.accessToken ?? "",
+      imageFile: imageFile,
+    })
+      .then((response) => {
+        console.log(response.data);
+        verifyAccessToken({ accessToken: user?.accessToken ?? "" }).then(
+          (response) => {
+            toast("Update new avatar successful", {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+              type: "success",
+            });
+            changeUser({
+              ...user!,
+              avatar: response.data.avatar,
+            });
+          }
+        );
+      })
+      .catch((error) => {
+        console.log("error haha: ", error.response.data);
+        toast(error.response.data.detail.message, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          type: "error",
+        });
+      });
+  };
+
   return {
     changeUser,
     login,
@@ -295,5 +341,6 @@ export const useUser = () => {
     register,
     editInformation,
     changePassword,
+    changeAvatar,
   };
 };
