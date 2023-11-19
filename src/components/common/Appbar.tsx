@@ -16,6 +16,8 @@ import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
+import Avatar from "@mui/material/Avatar";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -116,6 +118,8 @@ const PrimaryAppbar: React.FC<Props> = (props: Props) => {
     </Menu>
   );
 
+  const { user } = React.useContext(AuthContext);
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       {props.isLoggedIn && (
@@ -181,7 +185,17 @@ const PrimaryAppbar: React.FC<Props> = (props: Props) => {
                   onClick={handleProfileMenuOpen}
                   color="inherit"
                 >
-                  <AccountCircle />
+                  {user != null ? (
+                    <Avatar
+                      alt={`${user.firstname} ${user.lastname}`}
+                      src={user.avatar}
+                      style={{
+                        border: "2px solid white",
+                      }}
+                    />
+                  ) : (
+                    <AccountCircle />
+                  )}
                 </IconButton>
               </Box>
               <Box sx={{ display: { xs: "flex", md: "none" } }}>
