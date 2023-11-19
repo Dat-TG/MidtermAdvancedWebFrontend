@@ -4,7 +4,6 @@ const axiosInstance=axios.create({
     baseURL: 'https://web-advanced-server-v1.onrender.com/api',
 });
 
-axiosInstance.defaults.headers.post['Content-Type'] = 'application/json';
 
 axiosInstance.interceptors.request.use(
   request => {

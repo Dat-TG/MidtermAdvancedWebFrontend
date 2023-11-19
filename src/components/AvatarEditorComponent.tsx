@@ -12,15 +12,13 @@ import {
   Stack,
 } from "@mui/material";
 import { RotateLeft, RotateRight } from "@mui/icons-material";
-import { toast } from "react-toastify";
+import { useUser } from "../hooks/useUser";
 
-interface AvatarEditorProps {
-  setAvatar: React.Dispatch<React.SetStateAction<string>>;
-}
-
-function AvatarEditorComponent({ setAvatar }: AvatarEditorProps) {
+function AvatarEditorComponent() {
   const [image, setImage] = useState("");
   const editorRef = useRef<AvatarEditor | null>(null);
+
+  const { changeAvatar } = useUser();
 
   const [scale, setScale] = useState(0);
   const [rotate, setRotate] = useState(0);
@@ -45,21 +43,19 @@ function AvatarEditorComponent({ setAvatar }: AvatarEditorProps) {
 
     // If you want the image resized to the canvas size (also a HTMLCanvasElement)
     const canvasScaled = editorRef.current?.getImageScaledToCanvas();
-    const newImg = canvasScaled?.toDataURL();
-    // Call API to save on server storage
-    setAvatar(newImg!);
+
+    canvasScaled?.toBlob((blob) => {
+      // Create a File object from the blob
+      const file = new File([blob!], "editedImage.png", { type: "image/png" });
+
+      // Use 'file' as needed, for example, uploading to a server or displaying in the UI
+      // Here, you can perform actions like uploading to a server or updating state with the File object
+      // For example:
+      // uploadFileToServer(file);
+      // setEditedFile(file);
+      changeAvatar({ imageFile: file });
+    }, "image/png");
     setIsOpen(false);
-    toast("Update avatar successful!", {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      type: "success",
-    });
   };
 
   const inputStyle = {

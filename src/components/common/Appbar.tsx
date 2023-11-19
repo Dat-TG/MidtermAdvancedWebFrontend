@@ -11,11 +11,12 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
-import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
+import Avatar from "@mui/material/Avatar";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -106,6 +107,7 @@ const PrimaryAppbar: React.FC<Props> = (props: Props) => {
     >
       <MenuItem
         onClick={() => {
+          setAnchorEl(null);
           navigate("/profile");
         }}
       >
@@ -114,6 +116,8 @@ const PrimaryAppbar: React.FC<Props> = (props: Props) => {
       <MenuItem onClick={props.onLogout}>Log out</MenuItem>
     </Menu>
   );
+
+  const { user } = React.useContext(AuthContext);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -180,7 +184,13 @@ const PrimaryAppbar: React.FC<Props> = (props: Props) => {
                   onClick={handleProfileMenuOpen}
                   color="inherit"
                 >
-                  <AccountCircle />
+                  <Avatar
+                    alt={`${user?.firstname} ${user?.lastname}`}
+                    src={user?.avatar}
+                    style={{
+                      border: "2px solid white",
+                    }}
+                  />
                 </IconButton>
               </Box>
               <Box sx={{ display: { xs: "flex", md: "none" } }}>
@@ -209,7 +219,7 @@ const PrimaryAppbar: React.FC<Props> = (props: Props) => {
                 component="div"
                 sx={{ display: { xs: "none", sm: "block" }, cursor: "pointer" }}
                 onClick={() => {
-                  navigate("/");
+                  navigate("/landing");
                 }}
               >
                 CLASS ROOM

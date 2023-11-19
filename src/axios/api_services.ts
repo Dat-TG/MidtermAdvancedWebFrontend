@@ -96,3 +96,20 @@ export const logoutUser = ({ accessToken }: { accessToken: string }) => {
     },
   });
 };
+
+export const changeAvatarUser = ({
+  accessToken,
+  imageFile,
+}: {
+  accessToken: string;
+  imageFile: Blob;
+}) => {
+  const formData = new FormData();
+  formData.append("avatar", imageFile);
+  return instance.post("/user/avatar", formData, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
