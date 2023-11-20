@@ -42,8 +42,9 @@ function LogInForm() {
     await login({
       emailAddress: data.email,
       password: data.password,
+      callback: ()=>setIsLoading(false),
     });
-    setIsLoading(false);
+    
   };
 
   const [showPassword, setShowPassword] = useState(false);

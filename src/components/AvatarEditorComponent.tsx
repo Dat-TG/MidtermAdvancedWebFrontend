@@ -14,7 +14,11 @@ import {
 import { RotateLeft, RotateRight } from "@mui/icons-material";
 import { useUser } from "../hooks/useUser";
 
-function AvatarEditorComponent() {
+function AvatarEditorComponent({
+  callback,
+}: {
+  callback: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const [image, setImage] = useState("");
   const editorRef = useRef<AvatarEditor | null>(null);
 
@@ -39,6 +43,7 @@ function AvatarEditorComponent() {
   };
 
   const handleSaveAvatar = () => {
+    callback(true);
     //const canvas = editorRef.current?.getImage();
 
     // If you want the image resized to the canvas size (also a HTMLCanvasElement)
@@ -53,7 +58,7 @@ function AvatarEditorComponent() {
       // For example:
       // uploadFileToServer(file);
       // setEditedFile(file);
-      changeAvatar({ imageFile: file });
+      changeAvatar({ imageFile: file, callback: () => callback(false) });
     }, "image/png");
     setIsOpen(false);
   };

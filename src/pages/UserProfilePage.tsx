@@ -61,7 +61,7 @@ function UserProfile() {
               margin: "0 auto",
             }}
           />
-          <AvatarEditorComponent />
+          <AvatarEditorComponent callback={setIsLoading} />
 
           <div>
             <Typography variant="body1" style={{ textAlign: "center" }}>
@@ -114,8 +114,8 @@ function UserProfile() {
                 accessToken: user?.accessToken ?? "",
                 firstname: newUser.firstname,
                 lastname: newUser.lastname,
+                callback: () => setIsLoading(false),
               });
-              setIsLoading(false);
             }}
           />
 
@@ -136,8 +136,8 @@ function UserProfile() {
                 oldPassword: data.oldPassword,
                 newPassword: data.newPassword,
                 confirmPassword: data.confirmNewPassword,
+                callback: () => setIsLoading(false),
               });
-              setIsLoading(false);
             }}
           />
         </Paper>

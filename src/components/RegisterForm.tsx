@@ -43,8 +43,8 @@ function RegisterForm() {
       password: data.password,
       firstname: data.firstname,
       lastname: data.lastname,
+      callback: () => setIsLoading(false),
     });
-    setIsLoading(false);
 
     //console.log(data);
   };
@@ -210,6 +210,7 @@ function RegisterForm() {
         fullWidth
         style={{ marginTop: "32px" }}
         size="large"
+        disabled={isLoading}
       >
         {isLoading ? (
           <CircularProgress size={30} style={{ color: "white" }} />

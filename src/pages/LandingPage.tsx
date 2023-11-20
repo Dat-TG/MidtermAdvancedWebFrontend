@@ -68,15 +68,17 @@ function LandingPage() {
           xs={12}
           sx={{
             pt: 10,
+            pb: 5,
             display: "flex",
             justifyContent: "center",
+            alignItems: "center",
           }}
         >
-          <Grid item xs={8}>
+          <Grid item xs={8} >
             <Typography
               component="p"
               sx={{
-                fontSize: 24,
+                fontSize: 22,
                 color: "#818281",
                 textAlign: "center",
                 textJustify: "inter-word",

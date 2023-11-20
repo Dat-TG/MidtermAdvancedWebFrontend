@@ -37,11 +37,13 @@ export const useUser = () => {
     password,
     firstname,
     lastname,
+    callback,
   }: {
     emailAddress: string;
     password: string;
     firstname: string;
     lastname: string;
+    callback: () => void;
   }) => {
     registerUser({
       emailAddress: emailAddress,
@@ -51,6 +53,7 @@ export const useUser = () => {
     })
       .then((response) => {
         console.log(response.data);
+        callback();
         toast("Register successful!", {
           position: "top-right",
           autoClose: 5000,
@@ -72,6 +75,7 @@ export const useUser = () => {
       })
       .catch((error) => {
         console.log("error haha: ", error.response.data);
+        callback();
         toast(error.response.data.detail, {
           position: "top-right",
           autoClose: 5000,
@@ -89,9 +93,11 @@ export const useUser = () => {
   const login = async ({
     emailAddress,
     password,
+    callback,
   }: {
     emailAddress: string;
     password: string;
+    callback: () => void;
   }) => {
     loginUser({
       emailAddress: emailAddress,
@@ -103,6 +109,7 @@ export const useUser = () => {
         const refreshToken = response.data.refreshToken;
         verifyAccessToken({ accessToken: response.data.accessToken })
           .then((response) => {
+            callback();
             toast("Login successful!", {
               position: "top-right",
               autoClose: 5000,
@@ -125,6 +132,7 @@ export const useUser = () => {
           })
           .catch((error) => {
             console.log("error haha: ", error.response.data);
+            callback();
             toast(error.response.data.detail.message, {
               position: "top-right",
               autoClose: 5000,
@@ -140,6 +148,7 @@ export const useUser = () => {
       })
       .catch((error) => {
         console.log("error haha: ", error.response.data);
+        callback();
         toast(
           error.response.status == 500
             ? error.response.data.message
@@ -198,10 +207,12 @@ export const useUser = () => {
     firstname,
     lastname,
     accessToken,
+    callback,
   }: {
     firstname: string;
     lastname: string;
     accessToken: string;
+    callback: () => void;
   }) => {
     editUserInformation({
       accessToken: accessToken,
@@ -210,6 +221,7 @@ export const useUser = () => {
     })
       .then((response) => {
         console.log(response.data);
+        callback();
         toast("Update information successful!", {
           position: "top-right",
           autoClose: 5000,
@@ -229,6 +241,7 @@ export const useUser = () => {
       })
       .catch((error) => {
         console.log("error haha: ", error.response.data);
+        callback();
         toast(error.response.data.detail.message, {
           position: "top-right",
           autoClose: 5000,
@@ -248,11 +261,13 @@ export const useUser = () => {
     oldPassword,
     newPassword,
     confirmPassword,
+    callback,
   }: {
     oldPassword: string;
     newPassword: string;
     confirmPassword: string;
     accessToken: string;
+    callback: () => void;
   }) => {
     changeUserPassword({
       accessToken: accessToken,
@@ -262,6 +277,7 @@ export const useUser = () => {
     })
       .then((response) => {
         console.log(response.data);
+        callback();
         logout();
         toast("Change password successful! Please re-login to your account.", {
           position: "top-right",
@@ -277,6 +293,7 @@ export const useUser = () => {
       })
       .catch((error) => {
         console.log("error haha: ", error.response.data);
+        callback();
         toast(error.response.data.detail, {
           position: "top-right",
           autoClose: 5000,
@@ -291,13 +308,20 @@ export const useUser = () => {
       });
   };
 
-  const changeAvatar = ({ imageFile }: { imageFile: Blob }) => {
+  const changeAvatar = ({
+    imageFile,
+    callback,
+  }: {
+    imageFile: Blob;
+    callback: () => void;
+  }) => {
     changeAvatarUser({
       accessToken: user?.accessToken ?? "",
       imageFile: imageFile,
     })
       .then((response) => {
         console.log(response.data);
+        callback();
         verifyAccessToken({ accessToken: user?.accessToken ?? "" }).then(
           (response) => {
             toast("Update new avatar successful", {
@@ -320,6 +344,7 @@ export const useUser = () => {
       })
       .catch((error) => {
         console.log("error haha: ", error.response.data);
+        callback();
         toast(error.response.data.detail.message, {
           position: "top-right",
           autoClose: 5000,
