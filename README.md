@@ -9,7 +9,6 @@ Classroom Management Tools & Resources
 - [Usage](#usage)
 - [Features](#features)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## About
 
@@ -26,6 +25,10 @@ Advanced Web Programming
 Front-end: https://kdn-midterm.netlify.app/
 
 Back-end: https://web-advanced-server-v1.onrender.com/
+
+## Demo Video
+
+Youtube: https://youtu.be/Db7cxGFMyI8
 
 ## Installation
 
@@ -51,12 +54,18 @@ Then goto http://localhost:5173/
 - Utilizes a React UI Framework for the project's user interface, ensuring a responsive and modern design.
 
 ### Authentication Flow
-- Implements JWT for handling authentication flow, including Sign Up, Sign In, and Sign Out functionalities.
-- 
+Implements JWT for handling authentication flow, including:
+- Sign Up
+- Sign In
+- Verify Access Token
+- Refresh Token
+- Sign Out
+- Managing sign-in and sign-out UI states for users
+
 ### User Profile Management
 Users can edit:
 - Profile information
-- Change passwords
+- Change password
 - Upload and edit avatar
 
 ### Public Hosting
