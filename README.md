@@ -1,27 +1,71 @@
-# React + TypeScript + Vite
+# KDN Classroom
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Classroom Management Tools & Resources
 
-Currently, two official plugins are available:
+## Table of Contents
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [About](#about)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Features](#features)
+- [Contributing](#contributing)
+- [License](#license)
 
-## Expanding the ESLint configuration
+## About
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Midterm project (group assignment)
 
-- Configure the top-level `parserOptions` property like this:
+Advanced Web Programming
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+### Tech Stack
+- Front-end: Reactjs, Material UI, react-router, react-hook-form
+- Back-end: Nestjs, Postgres, Cloudinary
+
+## Deployment
+
+Front-end: https://kdn-midterm.netlify.app/
+
+Back-end: https://web-advanced-server-v1.onrender.com/
+
+## Installation
+
+```
+git clone https://github.com/Dat-TG/MidtermAdvancedWebFrontend.git
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Usage
+
+```
+npm install
+npm run dev
+```
+
+Then goto http://localhost:5173/
+
+## Features
+
+### User Navigation
+- Users can navigate between the Landing page, Sign Up, Sign In, Home page, and Profile page.
+
+### React UI Framework
+- Utilizes a React UI Framework for the project's user interface, ensuring a responsive and modern design.
+
+### Authentication Flow
+- Implements JWT for handling authentication flow, including Sign Up, Sign In, and Sign Out functionalities.
+- 
+### User Profile Management
+Users can edit:
+- Profile information
+- Change passwords
+- Upload and edit avatar
+
+### Public Hosting
+- Includes functionality to upload projects to a public host, facilitating easy sharing and accessibility.
+
+## Contributing
+
+This project was created and is actively maintained by:
+
+- [19120260 Hoàng Trần Thiên Khôi](https://github.com/thienkhoi0604/)
+- [20120454 Lê Công Đắt](https://github.com/dat-tg)
+- [20120537 Hồ Trung Nguyên](https://github.com/hotrungnguyen76)
